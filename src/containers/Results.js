@@ -34,6 +34,7 @@ export default function ResultsContainer({ path, query, title }) {
                 }
             })
             .catch(err => console.error(err))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
     
     return (

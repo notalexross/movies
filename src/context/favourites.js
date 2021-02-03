@@ -57,6 +57,7 @@ function ContextProvider({ children }) {
     useEffect(() => {
         sortFavourites()
         saveToLocal()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortBy, favourites])
 
     return (
