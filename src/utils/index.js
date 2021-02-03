@@ -111,8 +111,9 @@ export function formatCurrency(value, currency = 'USD', decimalPlaces = 0) {
     const currencies = { 'USD': '$', 'EUR': '€', 'CRC': '₡', 'GBP': '£', 'ILS': '₪', 'INR': '₹', 'JPY': '¥', 'KRW': '₩', 'NGN': '₦', 'PHP': '₱', 'PLN': 'zł', 'PYG': '₲', 'THB': '฿', 'UAH': '₴', 'VND': '₫' }
 
     const currencySymbol = currencies[currency] || '$'
+    const formatted = Number(Number(value).toFixed(decimalPlaces)).toLocaleString()
 
-    return currencySymbol + Number(Number(value).toFixed(decimalPlaces)).toLocaleString()
+    return Number(value) > 0 ? currencySymbol + formatted : undefined
 }
   
 export function numToPercentage(num, max = 10, decimalPlaces = 0) {
