@@ -27,10 +27,12 @@ export default function ResultsContainer({ path, query, title }) {
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                setResults(results => ([...results, ...data.results]))
-                if (page === 1) {
-                    setTotalPages(data.total_pages)
-                    setTotalResults(data.total_results)
+                if (data && data.results) {
+                    setResults(results => ([...results, ...data.results]))
+                    if (page === 1) {
+                        setTotalPages(data.total_pages)
+                        setTotalResults(data.total_results)
+                    }
                 }
             })
             .catch(err => console.error(err))

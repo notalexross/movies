@@ -102,7 +102,8 @@ Header.Search = function HeaderSearch({ searchPath = "/search", children, ...res
         }
     }
     
-    const handleSubmit = () => {
+    const handleSubmit = event => {
+        event.preventDefault()
         history.push(`${searchPath}?query=${searchQuery}`)
         // TODO: maybe uncomment this so search box stays open when submitted?
         // keepFormOpen.current = true
