@@ -12,67 +12,63 @@ const sortByLoaded = JSON.parse(window.localStorage.getItem('sort-by'))
 const favouritesLoaded = JSON.parse(window.localStorage.getItem('favourites'))
 
 function ContextProvider({ children }) {
-    const [ favourites, setFavourites ] = useState(favouritesLoaded || [])
-    const [ favouritesSorted, setFavouritesSorted ] = useState([])
-    const [ sortBy, setSortBy ] = useState(sortByLoaded || 'timestamp_favourited,desc')
-    
-    const saveToLocal = () => {
-        window.localStorage.setItem('sort-by', JSON.stringify(sortBy))
-        window.localStorage.setItem('favourites', JSON.stringify(favourites))
-    }
-    
-    const addToFavourites = newEntry => {
-        setFavourites(favourites => ([
-            ...favourites.filter(favourite => (
-                favourite.id !== newEntry.id
-            )),
-            {
-                ...newEntry,
-                timestamp_favourited: Date.now()
-            }
-        ]))
-    }
-    
-    const removeFromFavourites = movieId => {
-        setFavourites(favourites => (
-            favourites.filter(favourite => (
-                favourite.id !== movieId
-            ))
-        ))
-    }
-    
-    const sortFavourites = () => {
-        const sort = sortBy.split(',')
-        const sorted = favourites.slice().sort((a, b) => {
-            if (sort[1] === 'desc') {
-                return a[sort[0]] < b[sort[0]] ? 1 : a[sort[0]] > b[sort[0]] ? -1 : 0
-            } else if (sort[1] === 'asc') {
-                return a[sort[0]] > b[sort[0]] ? 1 : a[sort[0]] < b[sort[0]] ? -1 : 0
-            }
-            return 0
-        })
-        setFavouritesSorted(sorted)
-    }
-    
-    useEffect(() => {
-        sortFavourites()
-        saveToLocal()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [sortBy, favourites])
+  const [favourites, setFavourites] = useState(favouritesLoaded || [])
+  const [favouritesSorted, setFavouritesSorted] = useState([])
+  const [sortBy, setSortBy] = useState(sortByLoaded || 'timestamp_favourited,desc')
 
-    return (
-        <Context.Provider value={{
-            favourites,
-            favouritesSorted,
-            addToFavourites,
-            removeFromFavourites,
-            sortFavourites,
-            setSortBy,
-            sortBy
-        }}>
-            {children}
-        </Context.Provider>
-    )
+  const saveToLocal = () => {
+    window.localStorage.setItem('sort-by', JSON.stringify(sortBy))
+    window.localStorage.setItem('favourites', JSON.stringify(favourites))
+  }
+
+  const addToFavourites = newEntry => {
+    setFavourites(state => [
+      ...state.filter(favourite => favourite.id !== newEntry.id),
+      {
+        ...newEntry,
+        timestamp_favourited: Date.now()
+      }
+    ])
+  }
+
+  const removeFromFavourites = movieId => {
+    setFavourites(state => state.filter(favourite => favourite.id !== movieId))
+  }
+
+  const sortFavourites = () => {
+    const sort = sortBy.split(',')
+    const sorted = favourites.slice().sort((a, b) => {
+      if (a[sort[0]] < b[sort[0]]) {
+        return sort[1] === 'asc' ? -1 : 1
+      } else if (a[sort[0]] > b[sort[0]]) {
+        return sort[1] === 'asc' ? 1 : -1
+      }
+      return 0
+    })
+    setFavouritesSorted(sorted)
+  }
+
+  useEffect(() => {
+    sortFavourites()
+    saveToLocal()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortBy, favourites])
+
+  return (
+    <Context.Provider
+      value={{
+        favourites,
+        favouritesSorted,
+        addToFavourites,
+        removeFromFavourites,
+        sortFavourites,
+        setSortBy,
+        sortBy
+      }}
+    >
+      {children}
+    </Context.Provider>
+  )
 }
 
 export { Context as FavouritesContext, ContextProvider as FavouritesContextProvider }
