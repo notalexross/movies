@@ -1,5 +1,5 @@
 import { Cards } from '../components'
-import { formatDate } from '../utils'
+import { formatDate } from '../utils/format'
 
 export default function CardsContainer({ results = [] }) {
   const imagePath = 'https://image.tmdb.org/t/p/w300'

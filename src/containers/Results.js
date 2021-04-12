@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getUrl, getSearchUrl } from '../config'
+import { getMoviesListUrl, getSearchResultsUrl } from '../utils/api'
 import CardsContainer from './Cards'
 import { Button } from '../components'
 
@@ -16,9 +16,9 @@ export default function ResultsContainer({ path, query, title }) {
   useEffect(() => {
     let url
     if (query) {
-      url = getSearchUrl(query, page)
+      url = getSearchResultsUrl(query, page)
     } else {
-      url = getUrl(path, page)
+      url = getMoviesListUrl(path, page)
     }
 
     fetch(url)

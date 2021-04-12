@@ -6,8 +6,6 @@ import { GlobalStyle } from './styles'
 import { Results, Details, Favourites } from './pages'
 import { HeaderContainer, FooterContainer } from './containers'
 
-import {} from './config'
-
 export default function App() {
   return (
     <ThemeContextProvider>

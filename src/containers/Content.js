@@ -1,11 +1,6 @@
 import { Content, Facts, Keywords, Slider } from '../components'
-import {
-  formatCurrency,
-  numToPercentage,
-  CountryCodeToName,
-  getTopCast,
-  getRecommendations
-} from '../utils'
+import { getTopCast, getTopRecommendations } from '../utils/api'
+import { formatCurrency, numToPercentage, CountryCodeToName } from '../utils/format'
 
 export default function ContentContainer({ details }) {
   const profileUrl = 'https://image.tmdb.org/t/p/w185'
@@ -16,7 +11,7 @@ export default function ContentContainer({ details }) {
   )
 
   const cast = getTopCast(details, 10)
-  const recommendations = getRecommendations(details, 10)
+  const recommendations = getTopRecommendations(details, 10)
   const facts = [
     { title: 'Original Title', key: 'original_title', transform: getOriginalTitle },
     { title: 'Status', key: 'status', transform: value => value },

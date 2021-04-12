@@ -1,5 +1,3 @@
-// TODO date can be formatted with Intl.NumberFormat instead
-
 export function formatDate(dateString) {
   const months = [
     'Jan',
@@ -20,6 +18,7 @@ export function formatDate(dateString) {
   const day = date.getDate().toString().padStart(2, '0')
   const month = months[date.getMonth()]
   const year = date.getFullYear()
+
   return `${day} ${month} ${year}`
 }
 
@@ -29,13 +28,15 @@ export function formatDateGB(dateString) {
   const day = date.getDate().toString().padStart(2, '0')
   const month = (date.getMonth() + 1).toString().padStart(2, '0')
   const year = date.getFullYear()
+
   return `${day}/${month}/${year}`
 }
 
-export function getYear(dateString) {
+export function formatYear(dateString) {
   const timestamp = Date.parse(dateString)
   const date = new Date(timestamp)
   const year = date.getFullYear()
+
   return year
 }
 
@@ -50,72 +51,6 @@ export function formatTime(lengthMinutes) {
   formatted += `${minutes}m`
 
   return formatted
-}
-
-export function getVideoUrl(video) {
-  const urls = {
-    youtube: 'https://www.youtube.com/embed/',
-    vimeo: 'https://vimeo.com/'
-  }
-  const site = video && video.site
-  const siteUrl = site && urls[site.toLowerCase()]
-  const videoUrl = siteUrl && video.key && siteUrl + video.key
-  return videoUrl
-}
-
-export function getMainCrew(details, maxPeople) {
-  const roles = ['director', 'writer', 'screenplay'] // TODO: check screenplay/screenwriter?
-
-  let people = []
-  if (details && details.credits && details.credits.crew && details.credits.crew.length) {
-    const { crew } = details.credits
-    const filtered = crew.filter(member => roles.includes(member.job.toLowerCase()))
-    filtered.sort((a, b) => roles.indexOf(a.job.toLowerCase()) - roles.indexOf(b.job.toLowerCase()))
-
-    const merged = []
-    filtered.forEach(entry => {
-      const entryIndex = merged.findIndex(person => person.id === entry.id)
-      if (entryIndex >= 0) {
-        merged[entryIndex].roles.push(entry.job)
-      } else {
-        merged.push({
-          id: entry.id,
-          name: entry.name,
-          roles: [entry.job]
-        })
-      }
-    })
-
-    people = merged.slice(0, maxPeople)
-  }
-
-  return people
-}
-
-export function getTopCast(details, maxPeople) {
-  let people = []
-  if (details && details.credits && details.credits.cast && details.credits.cast.length) {
-    const { cast } = details.credits
-    const sorted = cast.slice().sort((a, b) => a.order - b.order)
-    people = sorted.slice(0, maxPeople)
-  }
-
-  return people
-}
-
-export function getRecommendations(details, maxRecom) {
-  let recommendations = []
-  if (
-    details &&
-    details.recommendations &&
-    details.recommendations.results &&
-    details.recommendations.results.length
-  ) {
-    const movies = details.recommendations.results
-    recommendations = movies.slice(0, maxRecom)
-  }
-
-  return recommendations
 }
 
 export function formatCurrency(value, currency = 'USD', decimalPlaces = 0) {

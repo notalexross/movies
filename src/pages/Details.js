@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { FeatureContainer, ContentContainer } from '../containers'
-import { getDetailsUrl, getProvidersUrl } from '../config'
+import { getMovieDetailsUrl, getStreamProvidersUrl } from '../utils/api'
 
 export default function Details() {
   const { movieId } = useParams()
@@ -10,7 +10,7 @@ export default function Details() {
 
   useEffect(() => {
     setIsLoading(true)
-    Promise.all([fetch(getDetailsUrl(movieId)), fetch(getProvidersUrl(movieId))])
+    Promise.all([fetch(getMovieDetailsUrl(movieId)), fetch(getStreamProvidersUrl(movieId))])
       .then(responses => Promise.all(responses.map(response => response.json())))
       .then(data => {
         const combined = {

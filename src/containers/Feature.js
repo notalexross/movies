@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Feature } from '../components'
 import VideoPlayerContainer from './VideoPlayer'
-import { formatDateGB, formatTime, getYear, numToPercentage, getMainCrew } from '../utils'
+import { getMainCrew } from '../utils/api'
+import { formatDateGB, formatTime, formatYear, numToPercentage } from '../utils/format'
 
 // TODO: Make maxProviders depend on the space available.
 // maybe make them wrap and put overflow on the container and max height.
@@ -101,7 +102,7 @@ export default function FeatureContainer({ details }) {
         <Feature.Content>
           <Feature.Title>
             {details.title}
-            <Feature.TitleDate>{` (${getYear(details.release_date)})`}</Feature.TitleDate>
+            <Feature.TitleDate>{` (${formatYear(details.release_date)})`}</Feature.TitleDate>
           </Feature.Title>
           <Feature.Facts>
             {certificationGB && (
