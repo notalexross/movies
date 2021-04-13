@@ -10,7 +10,7 @@ export default function FooterContainer() {
       <Footer.Right>
         <Footer.Social iconClass="fab fa-github" href={process.env.REACT_APP_SOCIAL_GITHUB} />
         <Footer.Social iconClass="fab fa-twitter" href={process.env.REACT_APP_SOCIAL_TWITTER} />
-        <Footer.Social iconClass="fas fa-palette" href={process.env.REACT_APP_SOCIAL_PORTFOLIO} />
+        <Footer.Social iconClass="fas fa-briefcase" href={process.env.REACT_APP_SOCIAL_PORTFOLIO} />
       </Footer.Right>
     </Footer>
   )
