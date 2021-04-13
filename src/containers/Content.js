@@ -1,11 +1,9 @@
 import { Content, Facts, Keywords, Slider } from '../components'
 import { getTopCast, getTopRecommendations } from '../utils/api'
 import { formatCurrency, numToPercentage, CountryCodeToName } from '../utils/format'
+import { IMAGE_URLS } from '../constants'
 
 export default function ContentContainer({ details }) {
-  const profileUrl = 'https://image.tmdb.org/t/p/w185'
-  const backdropUrl = 'https://image.tmdb.org/t/p/w300'
-
   const getOriginalTitle = originalTitle => (
     details.title === originalTitle ? undefined : originalTitle
   )
@@ -36,7 +34,7 @@ export default function ContentContainer({ details }) {
   const castSliderItems = cast.map(person => (
     <Slider.Item key={`${person.order}-${person.id}`}>
       <Slider.Item.Image
-        src={person.profile_path && `${profileUrl}${person.profile_path}`}
+        src={person.profile_path && `${IMAGE_URLS.IMAGE_185}${person.profile_path}`}
         alt={person.name}
         title={person.name}
         holderClass="fas fa-user"
@@ -56,7 +54,7 @@ export default function ContentContainer({ details }) {
       ratio="1.775"
     >
       <Slider.Item.Image
-        src={item.backdrop_path && `${backdropUrl}${item.backdrop_path}`}
+        src={item.backdrop_path && `${IMAGE_URLS.IMAGE_300}${item.backdrop_path}`}
         alt={item.title}
         title={item.title}
       />

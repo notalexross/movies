@@ -1,9 +1,8 @@
 import { Cards } from '../components'
 import { formatDate } from '../utils/format'
+import { IMAGE_URLS } from '../constants'
 
 export default function CardsContainer({ results = [] }) {
-  const imagePath = 'https://image.tmdb.org/t/p/w300'
-
   return (
     <Cards>
       {results.map(result => (
@@ -11,7 +10,7 @@ export default function CardsContainer({ results = [] }) {
           <Cards.Card.ImageWrapper>
             <Cards.Card.Bookmark movie={result} />
             <Cards.Card.Image
-              src={result.poster_path && `${imagePath}${result.poster_path}`}
+              src={result.poster_path && `${IMAGE_URLS.IMAGE_300}${result.poster_path}`}
               alt={result.title}
             />
           </Cards.Card.ImageWrapper>

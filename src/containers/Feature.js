@@ -3,6 +3,7 @@ import { Feature } from '../components'
 import VideoPlayerContainer from './VideoPlayer'
 import { getMainCrew } from '../utils/api'
 import { formatDateGB, formatTime, formatYear, numToPercentage } from '../utils/format'
+import { IMAGE_URLS } from '../constants'
 
 // TODO: Make maxProviders depend on the space available.
 // maybe make them wrap and put overflow on the container and max height.
@@ -12,11 +13,6 @@ const maxCrew = 3
 
 export default function FeatureContainer({ details }) {
   const [videoIsOpen, setVideoIsOpen] = useState(false)
-
-  const posterUrl = 'https://image.tmdb.org/t/p/w300'
-  const backdropUrl = 'https://image.tmdb.org/t/p/w1280'
-  const logoUrl = 'https://image.tmdb.org/t/p/w154'
-  const justWatchLogoUrl = 'https://www.justwatch.com/appassets/img/home/logo.svg'
 
   // TODO: get the direct link to justWatch page, not via TMDB...
   let providers
@@ -67,10 +63,10 @@ export default function FeatureContainer({ details }) {
   return (
     <>
       <VideoPlayerContainer isOpen={videoIsOpen} setIsOpen={setVideoIsOpen} videos={videos} />
-      <Feature backgroundSrc={details.backdrop_path && `${backdropUrl}${details.backdrop_path}`}>
+      <Feature backgroundSrc={details.backdrop_path && `${IMAGE_URLS.IMAGE_1280}${details.backdrop_path}`}>
         <Feature.Poster>
           <Feature.Image
-            src={details.poster_path && `${posterUrl}${details.poster_path}`}
+            src={details.poster_path && `${IMAGE_URLS.IMAGE_300}${details.poster_path}`}
             alt={details.title}
             title={details.title}
           />
@@ -79,7 +75,7 @@ export default function FeatureContainer({ details }) {
               {providers.map(provider => (
                 <Feature.Provider
                   key={provider.provider_id}
-                  src={`${logoUrl}${provider.logo_path}`}
+                  src={`${IMAGE_URLS.IMAGE_154}${provider.logo_path}`}
                   alt={provider.provider_name}
                   title={provider.provider_name}
                   href={justWatchLink}
@@ -89,7 +85,7 @@ export default function FeatureContainer({ details }) {
                 <Feature.Watch.Text>Now Streaming</Feature.Watch.Text>
                 <Feature.Watch.Link href={justWatchLink}>
                   <Feature.JustWatchLogo
-                    src={justWatchLogoUrl}
+                    src={IMAGE_URLS.IMAGE_JUSTWATCH_LOGO}
                     alt="just watch"
                     title="JustWatch"
                   />
