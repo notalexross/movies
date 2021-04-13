@@ -3,13 +3,7 @@ import { Feature } from '../components'
 import VideoPlayerContainer from './VideoPlayer'
 import { getMainCrew } from '../utils/api'
 import { formatDateGB, formatTime, formatYear, numToPercentage } from '../utils/format'
-import { IMAGE_URLS } from '../constants'
-
-// TODO: Make maxProviders depend on the space available.
-// maybe make them wrap and put overflow on the container and max height.
-const maxProviders = 2 // must be set to 2 currently, for when small.
-const maxGenres = 4
-const maxCrew = 3
+import { IMAGE_URLS, CONFIG } from '../constants'
 
 export default function FeatureContainer({ details }) {
   const [videoIsOpen, setVideoIsOpen] = useState(false)
@@ -19,14 +13,14 @@ export default function FeatureContainer({ details }) {
   let justWatchLink
   if (details.providers && details.providers.GB && details.providers.GB.flatrate) {
     providers = details.providers.GB.flatrate
-      .slice(0, maxProviders)
+      .slice(0, CONFIG.MAX_PROVIDERS)
       .sort((a, b) => a.display_priority - b.display_priority)
     justWatchLink = details.providers.GB.link
   }
 
   let genres = []
   if (details.genres) {
-    genres = details.genres.slice(0, maxGenres).map(genre => genre.name)
+    genres = details.genres.slice(0, CONFIG.MAX_GENRES).map(genre => genre.name)
   }
 
   let releaseDateGB = details.release_date
@@ -51,7 +45,7 @@ export default function FeatureContainer({ details }) {
     setVideoIsOpen(true)
   }
 
-  const crew = getMainCrew(details, maxCrew)
+  const crew = getMainCrew(details, CONFIG.MAX_CREW)
   // TODO: same for cast
 
   // TODO: trailer button should only show if a video is available
@@ -139,7 +133,7 @@ export default function FeatureContainer({ details }) {
                 <Feature.Person.Role>{member.roles.join(', ')}</Feature.Person.Role>
               </Feature.Person>
             ))}
-            {Array(maxCrew - crew.length + 1)
+            {Array(CONFIG.MAX_CREW - crew.length + 1)
               .fill()
               .map((_, idx) => (
                 // eslint-disable-next-line react/no-array-index-key

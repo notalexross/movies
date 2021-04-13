@@ -1,15 +1,15 @@
 import { Content, Facts, Keywords, Slider } from '../components'
 import { getTopCast, getTopRecommendations } from '../utils/api'
 import { formatCurrency, numToPercentage, CountryCodeToName } from '../utils/format'
-import { IMAGE_URLS } from '../constants'
+import { IMAGE_URLS, CONFIG } from '../constants'
 
 export default function ContentContainer({ details }) {
   const getOriginalTitle = originalTitle => (
     details.title === originalTitle ? undefined : originalTitle
   )
 
-  const cast = getTopCast(details, 10)
-  const recommendations = getTopRecommendations(details, 10)
+  const cast = getTopCast(details, CONFIG.MAX_CAST)
+  const recommendations = getTopRecommendations(details, CONFIG.MAX_RECOMMENDATIONS)
   const facts = [
     { title: 'Original Title', key: 'original_title', transform: getOriginalTitle },
     { title: 'Status', key: 'status', transform: value => value },
