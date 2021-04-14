@@ -18,16 +18,7 @@ export default function App() {
               <Route path="/movie/:movieId">
                 <Details />
               </Route>
-              <Route path="/search">
-                <Results />
-              </Route>
-              <Route path="/popular">
-                <Results />
-              </Route>
-              <Route path="/now_playing">
-                <Results />
-              </Route>
-              <Route path="/top_rated">
+              <Route path={['/search', '/popular', '/now_playing', '/top_rated']}>
                 <Results />
               </Route>
               <Route path="/bookmarks">
