@@ -1,3 +1,22 @@
+export function getPageTitleFromPathQuery(pathname, query) {
+  let title
+  switch (pathname) {
+    case '/popular':
+      title = 'Popular'
+      break
+    case '/now_playing':
+      title = 'Recent'
+      break
+    case '/top_rated':
+      title = 'Top Rated'
+      break
+    default:
+      title = `Search results for: "${query}"`
+  }
+
+  return title
+}
+
 export function formatDate(dateString) {
   const months = [
     'Jan',

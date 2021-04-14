@@ -18,29 +18,52 @@ export function getStreamProvidersUrl(movieId) {
   return `${apiUrl}/movie/${movieId}/watch/providers?api_key=${apiKey}`
 }
 
-function getVideoSiteUrl(video) {
-  const urls = {
-    youtube: 'https://www.youtube.com/embed/',
-    vimeo: 'https://vimeo.com/'
+export function getVideos(details) {
+  let videos
+  if (details.videos && details.videos.results && details.videos.results.length) {
+    videos = details.videos.results
   }
 
-  const siteUrl = urls[video.site.toLowerCase()]
-
-  return siteUrl
+  return videos
 }
 
-function isValidVideoObject(video) {
-  return video && video.key && video.site && getVideoSiteUrl(video)
-}
-
-export function getPlayVideoUrl(video) {
-  if (isValidVideoObject(video)) {
-    const videoUrl = getVideoSiteUrl(video) + video.key
-
-    return videoUrl
+export function getStreamProviders(details, maxStreamProviders) {
+  let providers
+  let justWatchLink
+  if (details.providers && details.providers.GB && details.providers.GB.flatrate) {
+    providers = details.providers.GB.flatrate
+      .slice(0, maxStreamProviders)
+      .sort((a, b) => a.display_priority - b.display_priority)
+    justWatchLink = details.providers.GB.link
   }
 
-  return null
+  return { providers, justWatchLink }
+}
+
+export function getReleaseInfo(details) {
+  let releaseDate = details.release_date
+  let certification
+  let releaseDateRegion
+  if (details.release_dates && details.release_dates.results) {
+    const releaseGB = details.release_dates.results.find(result => result.iso_3166_1 === 'GB')
+    if (releaseGB && releaseGB.release_dates && releaseGB.release_dates.length) {
+      const dates = releaseGB.release_dates
+      releaseDate = dates[0].release_date
+      certification = dates[0].certification
+      releaseDateRegion = 'GB'
+    }
+  }
+
+  return { releaseDate, certification, releaseDateRegion }
+}
+
+export function getMainGenres(details, maxGenres) {
+  let genres = []
+  if (details.genres) {
+    genres = details.genres.slice(0, maxGenres).map(genre => genre.name)
+  }
+
+  return genres
 }
 
 function getUniquePeople(people) {
@@ -82,6 +105,31 @@ export function getMainCrew(details, maxCrewMembers) {
   }
 
   return []
+}
+
+function getVideoSiteUrl(video) {
+  const urls = {
+    youtube: 'https://www.youtube.com/embed/',
+    vimeo: 'https://vimeo.com/'
+  }
+
+  const siteUrl = urls[video.site.toLowerCase()]
+
+  return siteUrl
+}
+
+function isValidVideoObject(video) {
+  return video && video.key && video.site && getVideoSiteUrl(video)
+}
+
+export function getPlayVideoUrl(video) {
+  if (isValidVideoObject(video)) {
+    const videoUrl = getVideoSiteUrl(video) + video.key
+
+    return videoUrl
+  }
+
+  return null
 }
 
 function hasCast(details) {
