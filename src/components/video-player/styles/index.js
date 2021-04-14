@@ -18,7 +18,7 @@ export const DimensionsWrapper = styled.div`
   width: 100%;
   max-width: ${({ theme }) => theme.maxWidth};
 
-  @media (min-width: 500px) {
+  @media (min-width: 800px) {
     width: 70%;
   }
 `
