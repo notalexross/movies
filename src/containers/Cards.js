@@ -6,7 +6,7 @@ export default function CardsContainer({ results = [] }) {
   return (
     <Cards>
       {results.map(result => (
-        <Cards.Card key={`${result.id}`} to={`/movie/${result.id}`}>
+        <Cards.Card key={result.id} to={`/movie/${result.id}`}>
           <Cards.Card.ImageWrapper>
             <Cards.Card.Bookmark movie={result} />
             <Cards.Card.Image
@@ -20,7 +20,6 @@ export default function CardsContainer({ results = [] }) {
           <Cards.Card.Content>
             <Cards.Card.Title>{result.title}</Cards.Card.Title>
             <Cards.Card.Release>{formatDate(result.release_date)}</Cards.Card.Release>
-            {/* <Cards.Card.Bookmark></Cards.Card.Bookmark> */}
           </Cards.Card.Content>
         </Cards.Card>
       ))}

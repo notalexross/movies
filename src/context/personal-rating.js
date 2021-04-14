@@ -1,13 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react'
 
 const Context = createContext()
-
-// window.localStorage.clear()
-
-const loadedRating = JSON.parse(window.localStorage.getItem('ratings'))
+const storedRatings = JSON.parse(window.localStorage.getItem('ratings'))
 
 function ContextProvider({ children }) {
-  const [ratings, setRatings] = useState(loadedRating || {})
+  const [ratings, setRatings] = useState(storedRatings || {})
 
   const getRating = movieId => ratings[movieId]
 

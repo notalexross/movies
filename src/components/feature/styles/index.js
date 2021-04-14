@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.section`
+  padding: 2rem 0;
   background-image: url('${({ backgroundSrc }) => backgroundSrc}');
   background-repeat: no-repeat;
   background-size: cover;
@@ -8,23 +9,23 @@ export const Container = styled.section`
   background-color: ${({ theme }) => theme.clrHeaderBG};
   background-blend-mode: multiply;
   color: #e5e5e5;
-  padding: 2rem 0;
 `
 
 export const Inner = styled.div`
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
   width: calc(100% - 3rem);
   max-width: ${({ theme }) => theme.maxWidth};
+  margin: 0 auto;
 
-  display: flex;
-  align-items: flex-start;
   & > * + * {
-    margin-left: 0rem;
+    margin-left: 0;
   }
 
-  flex-direction: column-reverse;
   @media (min-width: 650px) {
     flex-direction: row;
+
     & > * + * {
       margin-left: 2rem;
     }
@@ -32,30 +33,30 @@ export const Inner = styled.div`
 `
 
 export const Poster = styled.div`
-  background-color: ${({ theme }) => theme.clrHeaderBG};
-  border-radius: 0.6rem;
-  overflow: hidden;
   flex-shrink: 0;
-
   width: 100%;
   margin-top: 1.5rem;
+  border-radius: 0.6rem;
+  background-color: ${({ theme }) => theme.clrHeaderBG};
+  box-shadow: ${({ theme }) => theme.boxShadow};
+  overflow: hidden;
+
   @media (min-width: 650px) {
     width: auto;
     margin-top: 0;
   }
-
-  box-shadow: ${({ theme }) => theme.boxShadow};
 `
 
 export const ImageWrapper = styled.div`
+  display: none;
+  width: 200px;
   max-width: 100%;
   min-width: 100%;
-  width: 200px;
 
-  display: none;
   @media (min-width: 650px) {
     display: block;
   }
+
   @media (min-width: 900px) {
     width: 300px;
   }
@@ -67,10 +68,10 @@ export const Image = styled.img`
 `
 
 export const Watch = styled.div`
-  padding: 0.5rem 1.3rem;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1.3rem;
 `
 
 export const Provider = styled.img`
@@ -99,11 +100,11 @@ export const WatchLabel = styled.div`
 export const WatchText = styled.div``
 
 export const WatchLink = styled.a`
-  text-decoration: none;
-  color: unset;
-  font-weight: ${({ theme }) => theme.fwBold};
   display: flex;
   align-items: center;
+  color: unset;
+  font-weight: ${({ theme }) => theme.fwBold};
+  text-decoration: none;
 `
 
 export const Content = styled.div`
@@ -111,28 +112,25 @@ export const Content = styled.div`
 `
 
 export const Title = styled.h1`
-  font-size: 1.8rem;
   margin-bottom: 0.5rem;
+  font-size: 1.8rem;
 `
 
 export const TitleDate = styled.span`
-  font-weight: ${({ theme }) => theme.fwReg};
   opacity: 0.7;
+  font-weight: ${({ theme }) => theme.fwReg};
 `
 
 export const Facts = styled.div`
   display: flex;
   flex-wrap: wrap;
+  margin: 0 0 1rem;
   font-size: 0.9rem;
   line-height: 1.7;
-  margin-bottom: 1rem;
-
-  & > * + *::before {
-    margin-left: 0.5rem;
-  }
 
   & > * + *::before {
     content: '\u00B7';
+    margin-left: 0.5rem;
     margin-right: 0.5rem;
     font-weight: ${({ theme }) => theme.fwBold};
   }
@@ -141,34 +139,33 @@ export const Facts = styled.div`
 export const Fact = styled.div``
 
 export const Certification = styled.span`
+  padding: 0.1rem 0.2rem;
   border: solid 1px;
   border-radius: 0.2rem;
-  padding: 0.1rem 0.2rem;
   opacity: 0.7;
 `
 
 export const Rate = styled.div``
 
 export const Actions = styled.ul`
-  padding: 0;
-  list-style: none;
   display: flex;
   flex-wrap: wrap;
+  padding: 0;
   font-weight: ${({ theme }) => theme.fwBold};
   font-size: 0.9rem;
   line-height: 1.7;
+  list-style: none;
 `
 
 export const Action = styled.li`
   margin-right: 1.3rem;
-
   cursor: pointer;
   user-select: none;
 `
 
 export const Rating = styled.a`
-  text-decoration: none;
   color: unset;
+  text-decoration: none;
 `
 
 export const Favourite = styled.div``
@@ -176,8 +173,8 @@ export const Favourite = styled.div``
 export const Trailer = styled.div``
 
 export const Icon = styled.i`
-  font-size: 0.8rem;
   margin-right: 0.5rem;
+  font-size: 0.8rem;
 `
 
 export const IconStar = styled.i`
@@ -185,14 +182,14 @@ export const IconStar = styled.i`
 `
 
 export const Tagline = styled.p`
-  font-style: italic;
-  opacity: 0.7;
   margin-bottom: 1rem;
+  opacity: 0.7;
+  font-style: italic;
 `
 
 export const Subheading = styled.h2`
-  font-size: 1.2rem;
   margin-bottom: 1rem;
+  font-size: 1.2rem;
 `
 
 export const Text = styled.p`
@@ -200,12 +197,12 @@ export const Text = styled.p`
 `
 
 export const People = styled.ul`
-  list-style: none;
-  padding: 0;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   margin-bottom: 0;
+  padding: 0;
+  list-style: none;
 
   & > :not(*:last-child) {
     margin-right: 1rem;
@@ -227,6 +224,6 @@ export const PersonName = styled.span`
 `
 
 export const PersonRole = styled.span`
-  font-size: 0.8rem;
   opacity: 0.7;
+  font-size: 0.8rem;
 `

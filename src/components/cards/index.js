@@ -18,7 +18,7 @@ export default function Cards({ children, ...restProps }) {
   return <Container {...restProps}>{children}</Container>
 }
 
-Cards.Card = function CardsCard({ to, children, ...restProps }) {
+Cards.Card = function CardsCard({ children, to, ...restProps }) {
   if (to !== undefined) {
     return (
       <CardLink to={to}>

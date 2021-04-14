@@ -6,9 +6,8 @@ export default function VideoPlayerContainer({
   setIsOpen = () => {},
   videos = []
 }) {
-  // TODO: what other types are there? Sort by type instead and then choose 1st.
   const trailers = videos.filter(video => video.type.toLowerCase() === 'trailer')
-  const videoUrl = getPlayVideoUrl(trailers[0] || videos[0])
+  const playVideoUrl = getPlayVideoUrl(trailers[0] || videos[0])
 
   const handleClick = event => {
     if (event.currentTarget === event.target) {
@@ -16,9 +15,9 @@ export default function VideoPlayerContainer({
     }
   }
 
-  return isOpen && videoUrl ? (
+  return isOpen && playVideoUrl ? (
     <VideoPlayer onClick={handleClick}>
-      <VideoPlayer.Video src={videoUrl} allowFullScreen />
+      <VideoPlayer.Video src={playVideoUrl} allowFullScreen />
     </VideoPlayer>
   ) : null
 }

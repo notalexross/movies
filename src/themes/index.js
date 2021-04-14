@@ -1,5 +1,5 @@
 const commonTheme = {
-  // ffPrimary: '"Roboto", sans-serif',
+  maxWidth: '1300px',
   ffPrimary: '"Source Sans Pro", sans-serif',
   ffSecondary: '"Russo One", sans-serif',
   fwReg: 400,
@@ -8,8 +8,6 @@ const commonTheme = {
   clrDark: '#1e1e1e',
   clrInputBG: '#e5e5e5',
   clrInputFG: '#1e1e1e',
-  // maxWidth: '1000px',
-  maxWidth: '1300px',
   boxShadow: '0.25rem 0.25rem 0.75rem rgba(0,0,0,.25), 0.125rem 0.125rem 0.25rem rgba(0,0,0,.15)'
 }
 

@@ -7,9 +7,9 @@ export const Icon = styled.i`
 `
 
 export const Button = styled.button`
-  cursor: pointer;
+  padding: 0.1em 0.2em;
+  border: unset;
   background-color: unset;
   color: unset;
-  border: unset;
-  padding: 0.1em 0.2em;
+  cursor: pointer;
 `

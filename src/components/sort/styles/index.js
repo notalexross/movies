@@ -5,9 +5,9 @@ export const Container = styled.div`
 `
 
 export const Label = styled.label`
+  display: inline-block;
   margin-right: 0.5rem;
   margin-bottom: 0.5rem;
-  display: inline-block;
 `
 
 export const Select = styled.select`

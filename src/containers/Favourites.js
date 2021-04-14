@@ -16,8 +16,6 @@ export default function FavouritesContainer() {
     setPage(state => (state < totalPages ? state + 1 : state))
   }
 
-  // TODO: maybe add a confirmation button before doing "setSortBy", so doesn't lag.
-  // disable button whilst loading.
   return (
     <section>
       <h1>Bookmarks</h1>

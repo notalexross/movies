@@ -3,25 +3,23 @@ import { Link } from 'react-router-dom'
 
 export const Container = styled.section`
   display: flex;
-  overflow-x: scroll;
+  margin-bottom: 1rem;
   padding: 1rem;
+  overflow-x: scroll;
 
   & > * + * {
     margin-left: 1rem;
   }
-
-  margin-bottom: 1rem;
 `
 
 export const Item = styled.div`
   flex-shrink: 0;
-  border-radius: 0.7rem;
-  overflow: hidden;
-  box-shadow: ${({ theme }) => theme.boxShadow};
   width: ${({ $imgHeight, $ratio }) => `calc(${$imgHeight} * ${$ratio})`};
-
+  border-radius: 0.7rem;
   background-color: ${({ theme }) => theme.clrHeaderBG};
   color: ${({ theme }) => theme.clrHeaderFG};
+  box-shadow: ${({ theme }) => theme.boxShadow};
+  overflow: hidden;
 `
 
 export const LinkItem = styled(Item).attrs({ as: Link })`
@@ -35,21 +33,20 @@ export const LinkItem = styled(Item).attrs({ as: Link })`
 
 export const ImageWrapper = styled.div`
   position: relative;
-  overflow: hidden;
   width: 100%;
-
   padding-top: ${({ ratio }) => `calc(100% / ${ratio})`};
+  overflow: hidden;
 `
 
 export const Image = styled.img`
   display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top left;
-  position: absolute;
-  top: 0;
-  left: 0;
 `
 
 export const Content = styled.div`
@@ -57,14 +54,14 @@ export const Content = styled.div`
 `
 
 export const Title = styled.h2`
+  margin-bottom: 0.1rem;
   font-size: 1rem;
   font-weight: ${({ theme }) => theme.fwBold};
-  margin-bottom: 0.1rem;
 `
 
 export const Subtitle = styled.p`
-  font-size: 0.9rem;
-  opacity: 0.8;
-  line-height: 1.2;
   margin: 0;
+  opacity: 0.8;
+  font-size: 0.9rem;
+  line-height: 1.2;
 `

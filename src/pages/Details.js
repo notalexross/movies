@@ -8,20 +8,28 @@ export default function Details() {
   const [details, setDetails] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
+  const updateMovieDetails = () => {
     setIsLoading(true)
-    Promise.all([fetch(getMovieDetailsUrl(movieId)), fetch(getStreamProvidersUrl(movieId))])
+
+    const fetchRequests = [
+      fetch(getMovieDetailsUrl(movieId)),
+      fetch(getStreamProvidersUrl(movieId))
+    ]
+
+    Promise.all(fetchRequests)
       .then(responses => Promise.all(responses.map(response => response.json())))
       .then(data => {
-        const combined = {
+        const combinedData = {
           ...data[0],
           providers: data[1].results
         }
-        setDetails(combined)
+        setDetails(combinedData)
         setIsLoading(false)
       })
       .catch(err => console.error(err))
-  }, [movieId])
+  }
+
+  useEffect(updateMovieDetails, [movieId])
 
   return !isLoading ? (
     <>

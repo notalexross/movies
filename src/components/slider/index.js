@@ -9,10 +9,10 @@ export default function Slider({ children, ...restProps }) {
 }
 
 Slider.Item = function SliderItem({
+  children,
   to,
   imgHeight = '180px',
   ratio = 0.8,
-  children,
   ...restProps
 }) {
   return (

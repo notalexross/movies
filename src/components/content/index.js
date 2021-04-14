@@ -12,7 +12,7 @@ Content.Columns = function ContentColumns({ children, ...restProps }) {
   return <Columns {...restProps}>{children}</Columns>
 }
 
-Content.Column = function ContentColumn({ row, column, children, ...restProps }) {
+Content.Column = function ContentColumn({ children, row, column, ...restProps }) {
   return (
     <Column row={row} column={column} {...restProps}>
       {children}

@@ -11,18 +11,18 @@ export default function ContentContainer({ details }) {
   const cast = getTopCast(details, CONFIG.MAX_CAST)
   const recommendations = getTopRecommendations(details, CONFIG.MAX_RECOMMENDATIONS)
   const facts = [
-    { title: 'Original Title', key: 'original_title', transform: getOriginalTitle },
-    { title: 'Status', key: 'status', transform: value => value },
-    { title: 'Original Language', key: 'original_language', transform: CountryCodeToName },
-    { title: 'Budget', key: 'budget', transform: formatCurrency },
-    { title: 'Revenue', key: 'revenue', transform: formatCurrency }
+    { title: 'Original Title', key: 'original_title', format: getOriginalTitle },
+    { title: 'Status', key: 'status', format: value => value },
+    { title: 'Original Language', key: 'original_language', format: CountryCodeToName },
+    { title: 'Budget', key: 'budget', format: formatCurrency },
+    { title: 'Revenue', key: 'revenue', format: formatCurrency }
   ]
 
   const factItems = facts.map(fact => (
-    fact.transform(details[fact.key]) && (
+    fact.format(details[fact.key]) && (
       <Facts.Item key={fact.key}>
         <Facts.Item.Title>{fact.title}</Facts.Item.Title>
-        <Facts.Item.Value>{fact.transform(details[fact.key])}</Facts.Item.Value>
+        <Facts.Item.Value>{fact.format(details[fact.key])}</Facts.Item.Value>
       </Facts.Item>
     )
   ))
@@ -66,17 +66,12 @@ export default function ContentContainer({ details }) {
     </Slider.Item>
   ))
 
-  // TODO: images in slider need alt text and title
-
-  // TODO: maybe add reviews back in
   return (
     <Content>
       <Content.Columns>
         <Content.Column column="2" row="1">
           {factItems.length > 0 && (
-            <>
-              <Facts>{factItems}</Facts>
-            </>
+            <Facts>{factItems}</Facts>
           )}
           {keywordItems.length > 0 && (
             <>
@@ -103,13 +98,3 @@ export default function ContentContainer({ details }) {
     </Content>
   )
 }
-
-// <div>
-//     <h2 id="reviews">Reviews</h2>
-//     {details.reviews.results.slice(0,5).map((review, idx) => (
-//         <div key={idx}>
-//             <p>{review.author}</p>
-//             <p>{review.content}</p>
-//         </div>
-//     ))}
-// </div>

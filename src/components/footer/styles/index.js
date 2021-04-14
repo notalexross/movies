@@ -1,21 +1,18 @@
 import styled from 'styled-components'
 
 export const Container = styled.footer`
-  color: ${({ theme }) => theme.clrFooterFG};
   background-color: ${({ theme }) => theme.clrFooterBG};
+  color: ${({ theme }) => theme.clrFooterFG};
   box-shadow: 0 50vh 0 50vh ${({ theme }) => theme.clrFooterBG};
-
-  // border-top: solid 1px;
 `
 
 export const Inner = styled.div`
-  padding: 1.5rem;
-  max-width: ${({ theme }) => theme.maxWidth};
-  margin: 0 auto;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: ${({ theme }) => theme.maxWidth};
+  margin: 0 auto;
+  padding: 1.5rem;
 `
 
 export const Logo = styled.img`
@@ -28,9 +25,9 @@ export const Logo = styled.img`
 `
 
 export const Text = styled.p`
+  margin-bottom: 0.5em;
   opacity: 0.9;
   font-size: 1rem;
-  margin-bottom: 0.5em;
 `
 
 export const Left = styled.div``
@@ -42,14 +39,14 @@ export const Right = styled.div`
 `
 
 export const Anchor = styled.a`
-  text-decoration: none;
   color: unset;
+  text-decoration: none;
 `
 
 export const Icon = styled.i`
   opacity: 0.9;
-
   font-size: 1.5rem;
+
   @media (min-width: 500px) {
     font-size: 2.5rem;
   }

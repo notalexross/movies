@@ -18,8 +18,6 @@ import {
   Options
 } from './styles'
 
-// TODO: header should stick to top when scrolling up, but scroll off when scroll down.
-
 export default function Header({ children, ...restProps }) {
   return (
     <Container {...restProps}>
@@ -36,7 +34,7 @@ Header.Options = function HeaderOptions({ children, ...restProps }) {
   return <Options {...restProps}>{children}</Options>
 }
 
-Header.Home = function HeaderHome({ to = '/', children, ...restProps }) {
+Header.Home = function HeaderHome({ children, to = '/', ...restProps }) {
   return (
     <Home to={to} {...restProps}>
       <Title>{children}</Title>
@@ -52,7 +50,7 @@ Header.Nav = function HeaderNav({ children, ...restProps }) {
   )
 }
 
-Header.Nav.Item = function HeaderNavItem({ to = '/', children, ...restProps }) {
+Header.Nav.Item = function HeaderNavItem({ children, to = '/', ...restProps }) {
   return (
     <NavItem {...restProps}>
       <NavLinkStyled to={to}>{children}</NavLinkStyled>
@@ -65,7 +63,6 @@ Header.Search = function HeaderSearch({ searchPath = '/search', ...restProps }) 
   const [searchQuery, setSearchQuery] = useState('')
   const inputRef = useRef()
   const buttonRef = useRef()
-  const keepFormOpen = useRef(false)
   const history = useHistory()
 
   const handleInputChange = event => {
@@ -77,11 +74,10 @@ Header.Search = function HeaderSearch({ searchPath = '/search', ...restProps }) 
 
   const handleBlur = () => {
     setTimeout(() => {
-      if (
-        document.activeElement !== buttonRef.current &&
-        document.activeElement !== inputRef.current &&
-        !keepFormOpen.current
-      ) {
+      const shouldCloseSearchBox =
+        document.activeElement !== buttonRef.current && document.activeElement !== inputRef.current
+
+      if (shouldCloseSearchBox) {
         setIsOpen(false)
       }
     }, 0)
@@ -97,20 +93,12 @@ Header.Search = function HeaderSearch({ searchPath = '/search', ...restProps }) 
   const handleSubmit = event => {
     event.preventDefault()
     history.push(`${searchPath}?query=${searchQuery}`)
-    // TODO: maybe uncomment this so search box stays open when submitted?
-    // keepFormOpen.current = true
     document.activeElement.blur()
-    setTimeout(() => {
-      keepFormOpen.current = false
-    }, 0)
   }
 
   useEffect(() => {
     if (isOpen) {
       inputRef.current.focus()
-    } else {
-      // TODO: should it clear on open?
-      // setSearchQuery('')
     }
   }, [isOpen])
 

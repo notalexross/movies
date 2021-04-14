@@ -13,18 +13,20 @@ export default function ResultsContainer({ path, query, title }) {
     setPage(state => (state < totalPages ? state + 1 : state))
   }
 
-  useEffect(() => {
-    let url
+  const updateResults = () => {
+    let apiUrl
     if (query) {
-      url = getSearchResultsUrl(query, page)
+      apiUrl = getSearchResultsUrl(query, page)
     } else {
-      url = getMoviesListUrl(path, page)
+      apiUrl = getMoviesListUrl(path, page)
     }
 
-    fetch(url)
+    fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        if (data && data.results) {
+        const hasResults = obj => obj && obj.results
+
+        if (hasResults(data)) {
           setResults(state => [...state, ...data.results])
           if (page === 1) {
             setTotalPages(data.total_pages)
@@ -33,8 +35,9 @@ export default function ResultsContainer({ path, query, title }) {
         }
       })
       .catch(err => console.error(err))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page])
+  }
+
+  useEffect(updateResults, [page, path, query])
 
   return (
     <section>

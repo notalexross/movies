@@ -1,27 +1,16 @@
-// TODO: The ratings will not update once added to favourites currently.
-// Ideally, would take only id and update rest of data on page load, but the api doesn't support multiple ids in a single request.
-// Maybe gradually update the data when loaded in (only on clicking load more) if 24 hours since last update.
-
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useCallback } from 'react'
 
 const Context = createContext()
-
-// window.localStorage.clear()
-
-const sortByLoaded = JSON.parse(window.localStorage.getItem('sort-by'))
-const favouritesLoaded = JSON.parse(window.localStorage.getItem('favourites'))
+const storedSortBy = JSON.parse(window.localStorage.getItem('sort-by'))
+const storedFavourites = JSON.parse(window.localStorage.getItem('favourites'))
 
 function ContextProvider({ children }) {
-  const [favourites, setFavourites] = useState(favouritesLoaded || [])
+  const [favourites, setFavourites] = useState(storedFavourites || [])
   const [favouritesSorted, setFavouritesSorted] = useState([])
-  const [sortBy, setSortBy] = useState(sortByLoaded || 'timestamp_favourited,desc')
-
-  const saveToLocal = () => {
-    window.localStorage.setItem('sort-by', JSON.stringify(sortBy))
-    window.localStorage.setItem('favourites', JSON.stringify(favourites))
-  }
+  const [sortBy, setSortBy] = useState(storedSortBy || 'timestamp_favourited,desc')
 
   const addToFavourites = newEntry => {
+    // issue: ratings will never update in favourites unless removed and readded
     setFavourites(state => [
       ...state.filter(favourite => favourite.id !== newEntry.id),
       {
@@ -35,7 +24,7 @@ function ContextProvider({ children }) {
     setFavourites(state => state.filter(favourite => favourite.id !== movieId))
   }
 
-  const sortFavourites = () => {
+  const sortFavourites = useCallback(() => {
     const sort = sortBy.split(',')
     const sorted = favourites.slice().sort((a, b) => {
       if (a[sort[0]] < b[sort[0]]) {
@@ -43,16 +32,21 @@ function ContextProvider({ children }) {
       } else if (a[sort[0]] > b[sort[0]]) {
         return sort[1] === 'asc' ? 1 : -1
       }
+
       return 0
     })
     setFavouritesSorted(sorted)
-  }
+  }, [sortBy, favourites])
 
   useEffect(() => {
+    const saveToLocal = () => {
+      window.localStorage.setItem('sort-by', JSON.stringify(sortBy))
+      window.localStorage.setItem('favourites', JSON.stringify(favourites))
+    }
+
     sortFavourites()
     saveToLocal()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortBy, favourites])
+  }, [sortBy, favourites, sortFavourites])
 
   return (
     <Context.Provider

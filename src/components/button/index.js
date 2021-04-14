@@ -1,6 +1,6 @@
 import { Container } from './styles'
 
-export default function Button({ isShown, onClick = () => {}, children, ...restProps }) {
+export default function Button({ children, isShown, onClick = () => {}, ...restProps }) {
   const handleClick = event => {
     event.target.blur()
     onClick()

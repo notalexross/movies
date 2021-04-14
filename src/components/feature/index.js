@@ -38,7 +38,7 @@ import {
   PersonRole
 } from './styles'
 
-export default function Feature({ backgroundSrc, children, ...restProps }) {
+export default function Feature({ children, backgroundSrc, ...restProps }) {
   return (
     <Container backgroundSrc={backgroundSrc} {...restProps}>
       <Inner>{children}</Inner>
@@ -70,7 +70,7 @@ Feature.Watch = function FeatureWatch({ children, ...restProps }) {
   return <Watch {...restProps}>{children}</Watch>
 }
 
-Feature.Provider = function FeatureProvider({ src, href, children, ...restProps }) {
+Feature.Provider = function FeatureProvider({ children, src, href, ...restProps }) {
   return src ? (
     <Link href={href} target="_blank" rel="noopener noreferrer">
       <Provider src={src} {...restProps}>
@@ -128,7 +128,7 @@ const Star = function FeatureRateStar({
   setRatingIndex,
   ...restProps
 }) {
-  const isFilled =
+  const shouldFill =
     (hoverIndex !== undefined && idx <= hoverIndex) ||
     (hoverIndex === undefined && idx <= ratingIndex)
 
@@ -144,7 +144,7 @@ const Star = function FeatureRateStar({
     setHoverIndex()
   }
 
-  return isFilled ? (
+  return shouldFill ? (
     <IconStar
       className="fas fa-star"
       onClick={handleClick}
@@ -199,18 +199,19 @@ Feature.Action = function FeatureAction({ children, ...restProps }) {
 }
 
 Feature.Rating = function FeatureRating({ children, ...restProps }) {
-  // TODO: this should scroll page to review section on click
-  // hopefully via anchor tag, so can focus with tab
   return <Rating {...restProps}>{children}</Rating>
 }
 
 Feature.Favourite = function FeatureFavourite({ movie, ...restProps }) {
   const [isFavourite, handleClick] = useToggleFavourite(movie)
 
+  const iconClassName = isFavourite ? 'fas fa-bookmark' : 'far fa-bookmark'
+  const toggledText = isFavourite ? 'Remove Bookmark' : 'Add Bookmark'
+
   return (
     <Favourite onClick={handleClick} {...restProps}>
-      {isFavourite ? <Icon className="fas fa-bookmark" /> : <Icon className="far fa-bookmark" />}
-      {isFavourite ? 'Remove Bookmark' : 'Add Bookmark'}
+      <Icon className={iconClassName} />
+      {toggledText}
     </Favourite>
   )
 }
@@ -235,8 +236,6 @@ Feature.Subheading = function FeatureSubheading({ children, ...restProps }) {
 Feature.Text = function FeatureText({ children, ...restProps }) {
   return <Text {...restProps}>{children}</Text>
 }
-
-// TODO: People onwards currently not used. Fill with Director/writer/etc.
 
 Feature.People = function FeaturePeople({ children, ...restProps }) {
   return <People {...restProps}>{children}</People>
